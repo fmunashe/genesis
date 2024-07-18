@@ -56,11 +56,6 @@ class Dashboard extends \Filament\Pages\Dashboard
                 ->form([
                     DatePicker::make('startDate'),
                     DatePicker::make('endDate'),
-                    Select::make("allocationStatus")
-                        ->searchable()
-                        ->options(
-                            Equipment::query()->pluck('allocation_status', 'allocation_status')->toArray()
-                        )
                 ]),
         ];
     }
