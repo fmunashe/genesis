@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\PaymentsController;
-use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TicketTypeController;
 use Illuminate\Http\Request;
