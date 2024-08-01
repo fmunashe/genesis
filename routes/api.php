@@ -10,7 +10,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-//Route::apiResource('roles', RoleController::class)->except(['create', 'edit']);
 Route::apiResource('tickets', TicketController::class)->except(['create', 'edit']);
 Route::apiResource('ticketTypes', TicketTypeController::class)->except(['create', 'edit']);
 Route::apiResource('payments', PaymentsController::class)->only(['index', 'store']);
