@@ -19,8 +19,8 @@ return new class extends Migration {
             $table->double("price");
             $table->string("ageRestriction")->nullable();
             $table->date("eventDate");
-            $table->time("startTime");
-            $table->time("endTime");
+            $table->dateTime("startTime");
+            $table->dateTime("endTime");
             $table->string("entrance")->nullable();
             $table->boolean("status")->default(true);
             $table->timestamps();

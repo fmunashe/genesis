@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
 use App\Models\Ticket;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
 class TicketController extends BaseController
@@ -21,6 +22,7 @@ class TicketController extends BaseController
     {
         $data = $request->all();
         $ticket = Ticket::query()->create([
+            'ticket_type_id' => $data['ticket_type_id'],
             'eventName' => $data['eventName'],
             'eventVenue' => $data['eventVenue'],
             'price' => $data['price'],
@@ -44,13 +46,14 @@ class TicketController extends BaseController
     {
         $data = $request->all();
         $updatedTicket = $ticket->update([
+            'ticket_type_id' => $data['ticket_type_id'],
             'eventName' => $data['eventName'],
             'eventVenue' => $data['eventVenue'],
             'price' => $data['price'],
             'ageRestriction' => $data['ageRestriction'],
-            'eventDate' => $data['eventDate'],
-            'startTime' => $data['startTime'],
-            'endTime' => $data['endTime'],
+            'eventDate' => Carbon::parse($data['eventDate']),
+            'startTime' => Carbon::parse($data['startTime']),
+            'endTime' => Carbon::parse($data['endTime']),
             'entrance' => $data['entrance'],
             'status' => $data['status'],
         ]);
