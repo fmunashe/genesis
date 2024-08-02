@@ -135,7 +135,7 @@ return [
             "description" => "localhost"
         ],
         [
-            "url" => "http://localhost",
+            "url" => env("LIVE_URL"),
             "description" => "production"
         ],
     ],

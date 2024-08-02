@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,5 +122,10 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    'PAYNOW_INTEGRATION_ID' => env('PAYNOW_INTEGRATION_ID', '19010'),
+    'PAYNOW_INTEGRATION_KEY' => env('PAYNOW_INTEGRATION_KEY', 'a1bc2d89-55e4-4cff-8251-7a3ec7428e6c'),
+    'PAYNOW_RETURN_URL' => env('PAYNOW_RETURN_URL', ''),
+    'PAYNOW_RESULT_URL' => env('PAYNOW_RESULT_URL', ''),
 
 ];

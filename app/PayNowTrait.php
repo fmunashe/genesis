@@ -5,7 +5,6 @@ namespace App;
 use App\Models\Order;
 use App\Models\Payments;
 use App\Models\Ticket;
-use Illuminate\Support\Facades\Log;
 use Paynow\Core\InitResponse;
 use Paynow\Http\ConnectionException;
 use Paynow\Payments\HashMismatchException;
@@ -23,7 +22,7 @@ trait PayNowTrait
      */
     public function initiatePayNowRequest($eventName, Payments $paymentModel, Order $order): InitResponse
     {
-        $paynow = new Paynow('INTEGRATION_ID', 'INTEGRATION_KEY', 'http://example.com/gateways/paynow/update', 'http://example.com/return?gateway=paynow');
+        $paynow = new Paynow(config('app.PAYNOW_INTEGRATION_ID'), config('app.PAYNOW_INTEGRATION_KEY'), config('app.PAYNOW_RETURN_URL'), config('app.PAYNOW_RESULT_URL'));
 
         $payment = $paynow->createPayment($eventName, $paymentModel->payerEmail);
 
@@ -42,7 +41,7 @@ trait PayNowTrait
      */
     public function pollPayNowResponse($pollUrl, Payments $payment): bool
     {
-        $paynow = new Paynow('INTEGRATION_ID', 'INTEGRATION_KEY', 'http://example.com/gateways/paynow/update', 'http://example.com/return?gateway=paynow');
+        $paynow = new Paynow(config('app.PAYNOW_INTEGRATION_ID'), config('app.PAYNOW_INTEGRATION_KEY'), config('app.PAYNOW_RETURN_URL'), config('app.PAYNOW_RESULT_URL'));
 
         $status = $paynow->pollTransaction($pollUrl);
 

@@ -21,7 +21,12 @@ class TicketController extends BaseController
     public function store(StoreTicketRequest $request): JsonResponse
     {
         $data = $request->all();
+        $banner = $request->file('banner');
+        $path = $banner->store('uploads', 'public');
+
+
         $ticket = Ticket::query()->create([
+            'banner' => $path,
             'ticket_type_id' => $data['ticket_type_id'],
             'eventName' => $data['eventName'],
             'eventVenue' => $data['eventVenue'],

@@ -18,6 +18,7 @@ class StoreTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'banner' => 'required|file|mimes:jpg,jpeg,png,pdf|max:10240',
             'ticket_type_id' => 'required',
             'eventName' => 'required',
             'eventVenue' => 'required',
