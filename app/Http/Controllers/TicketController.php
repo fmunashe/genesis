@@ -13,7 +13,7 @@ class TicketController extends BaseController
 
     public function index(): JsonResponse
     {
-        $tickets = Ticket::query()->where('status', '=', true)->paginate(10);
+        $tickets = Ticket::query()->with('ticketType')->where('status', '=', true)->paginate(10);
         return $this->buildSuccessResponse($tickets, 'Tickets retrieved successfully');
     }
 
@@ -43,6 +43,7 @@ class TicketController extends BaseController
 
     public function show(Ticket $ticket): JsonResponse
     {
+        $ticket->load('ticketType');
         return $this->buildSuccessResponse($ticket, "Ticket retrieved successfully");
     }
 
