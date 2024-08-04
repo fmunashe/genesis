@@ -32,9 +32,9 @@ class AdminPanelProvider extends PanelProvider
 //            ->passwordReset()
 //            ->emailVerification()
 //            ->profile()
-            ->brandName('Genesis Real Estate Africa')
+            ->brandName('Synth Music')
             ->colors([
-                'primary' => Color::Green,
+                'primary' => Color::Amber,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
