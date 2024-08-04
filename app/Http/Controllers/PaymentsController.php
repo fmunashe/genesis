@@ -30,8 +30,7 @@ class PaymentsController extends BaseController
     public function store(StorePaymentsRequest $request): JsonResponse
     {
         $data = $request->all();
-        Log::info("data is ",[$data]);
-        $eventName = $data['eventName'];
+        $eventName = null;
         $order = Order::query()->create([
             'description' => 'New Event Order'
         ]);
@@ -49,6 +48,7 @@ class PaymentsController extends BaseController
         foreach ($order->items as $item) {
             $ticket = Ticket::query()->firstWhere('id', '=', $item->ticket_id);
             $totalBill = $totalBill + ($ticket->price * $item->quantity);
+            $eventName = $ticket->eventName;
         }
         $payment = Payments::query()->create([
             'order_id' => $order->id,

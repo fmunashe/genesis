@@ -23,8 +23,7 @@ class StorePaymentsRequest extends FormRequest
             'tickets.*.quantity' => 'required|integer|min:1',
             'payerEmail' => 'required',
             'payerMobile' => 'required',
-            'paymentMode' => 'required',
-            'eventName'=>'required'
+            'paymentMode' => 'required'
         ];
     }
 
