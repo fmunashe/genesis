@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\QRCodeResource\Pages;
 use App\Filament\Resources\QRCodeResource\RelationManagers;
 use App\Http\Controllers\QRcodeController;
-use App\Models\QRCode;
+use App\Models\QRcode;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
