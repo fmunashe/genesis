@@ -16,7 +16,7 @@ use Filament\Tables\Table;
 
 class QRCodeResource extends Resource
 {
-    protected static ?string $model = QRCode::class;
+    protected static ?string $model = QRcode::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
