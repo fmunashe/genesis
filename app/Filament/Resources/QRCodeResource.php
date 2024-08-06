@@ -18,7 +18,7 @@ class QRCodeResource extends Resource
 {
     protected static ?string $model = QRcode::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-signal';
 
     protected string $controller = QRcodeController::class;
 
@@ -56,7 +56,7 @@ class QRCodeResource extends Resource
                 //
             ])
             ->actions([
-                Action::make('customSave')
+                Action::make('verifyCode')
                     ->label('Verify And Admit')
                     ->action(function (QRCode $record, array $data): void {
                         if ($data['confirm']) {

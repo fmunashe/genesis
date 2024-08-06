@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Allocation;
+use App\Models\Ticket;
 use App\Observers\AllocationObserver;
+use App\Observers\TicketObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,5 +24,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Allocation::observe(AllocationObserver::class);
+        Ticket::observe(TicketObserver::class);
     }
 }

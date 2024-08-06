@@ -3,9 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Filament\Widgets\EquipmentAllocationOverview;
-use App\Models\Equipment;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Select;
 use Filament\Pages\Dashboard\Actions\FilterAction;
 use Filament\Pages\Dashboard\Concerns\HasFiltersForm;
 
@@ -19,9 +17,12 @@ class Dashboard extends \Filament\Pages\Dashboard
     public function getWidgets(): array
     {
 //        return Filament::getWidgets();
-        return [
-            EquipmentAllocationOverview::class
-        ];
+        if (auth()->user()->role->name == "genesis") {
+            return [
+                EquipmentAllocationOverview::class
+            ];
+        }
+        return [];
     }
 
     public function getColumns(): int|string|array
@@ -51,12 +52,15 @@ class Dashboard extends \Filament\Pages\Dashboard
      */
     protected function getHeaderActions(): array
     {
-        return [
-            FilterAction::make()
-                ->form([
-                    DatePicker::make('startDate'),
-                    DatePicker::make('endDate'),
-                ]),
-        ];
+        if (auth()->user()->role->name == "genesis") {
+            return [
+                FilterAction::make()
+                    ->form([
+                        DatePicker::make('startDate'),
+                        DatePicker::make('endDate'),
+                    ]),
+            ];
+        }
+        return [];
     }
 }

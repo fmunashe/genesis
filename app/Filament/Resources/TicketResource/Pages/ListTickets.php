@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Filament\Resources\QRCodeResource\Pages;
+namespace App\Filament\Resources\TicketResource\Pages;
 
-use App\Filament\Resources\QRCodeResource;
+use App\Filament\Resources\TicketResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
 use pxlrbt\FilamentExcel\Columns\Column;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
-class ListQRCodes extends ListRecords
+class ListTickets extends ListRecords
 {
-    protected static string $resource = QRCodeResource::class;
+    protected static string $resource = TicketResource::class;
 
     protected function getHeaderActions(): array
     {

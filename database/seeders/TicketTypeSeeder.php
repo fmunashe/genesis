@@ -13,8 +13,8 @@ class TicketTypeSeeder extends Seeder
     public function run(): void
     {
         $types = [
-            ['id' => 1, 'name' => 'VIP', 'description' => 'VIP Ticket Type'],
-            ['id' => 2, 'name' => 'VVIP', 'description' => 'VVIP Ticket Type'],
+            ['id' => 1, 'name' => 'Early Bird', 'description' => 'Early Bird Ticket Type'],
+            ['id' => 2, 'name' => 'Final Release', 'description' => 'Final Release Ticket Type'],
             ['id' => 3, 'name' => 'Regular', 'description' => 'Regular Ticket Type']
         ];
 
