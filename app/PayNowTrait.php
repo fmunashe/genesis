@@ -47,19 +47,21 @@ trait PayNowTrait
 
         $status = $paynow->pollTransaction($pollUrl);
 
-        Log::info("====== Status is ======",[$status]);
-        Log::info("====== Status Data is ======",[$status->data()]);
+        Log::info("====== Status is ======", [$status]);
+        Log::info("====== Status Data is ======", [$status->data()]);
 
         if ($status->paid()) {
             $payment->update([
                 'status' => 'Paid',
                 'pollUrl' => $pollUrl,
-                'message'=>'Payment Was Successful'
+                'message' => 'Payment Was Successful'
             ]);
             return true;
         } else {
             $payment->update([
-                'pollUrl' => $pollUrl
+                'pollUrl' => $pollUrl,
+                'status' => $status->status(),
+                'message' => $status->data()['error']
             ]);
             return false;
         }
