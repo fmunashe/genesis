@@ -60,8 +60,8 @@ trait PayNowTrait
         } else {
             $payment->update([
                 'pollUrl' => $pollUrl,
-                'status' => $status->status(),
-                'message' => $status->data()['error']
+                'status' => $status->data()['status'],
+                'message' => $status->data()['status']
             ]);
             return false;
         }
