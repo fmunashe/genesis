@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string("pollUrl")->nullable();
             $table->double("totalBill")->nullable();
             $table->string("status")->nullable();
+            $table->string("message")->nullable();
             $table->timestamps();
         });
     }

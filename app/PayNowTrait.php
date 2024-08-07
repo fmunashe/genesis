@@ -32,6 +32,7 @@ trait PayNowTrait
             $payment->add($ticket->eventName . " " . $ticket->ticketType->name, $billPrice);
         }
 
+//        return $paynow->sendMobile($payment, $paymentModel->payerMobile, $paymentModel->paymentMode);
         return $paynow->sendMobile($payment, $paymentModel->payerMobile, $paymentModel->paymentMode);
     }
 
@@ -48,7 +49,8 @@ trait PayNowTrait
         if ($status->paid()) {
             $payment->update([
                 'status' => 'Paid',
-                'pollUrl' => $pollUrl
+                'pollUrl' => $pollUrl,
+                'message'=>'Payment Was Successful'
             ]);
             return true;
         } else {

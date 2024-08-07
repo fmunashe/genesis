@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePaymentsRequest;
-use App\Http\Requests\UpdatePaymentsRequest;
 use App\Models\Order;
 use App\Models\OrderItems;
 use App\Models\Payments;
@@ -68,7 +67,11 @@ class PaymentsController extends BaseController
                 }
                 return $this->buildSuccessResponse($paymentResponse, "Payment is being processed");
             } else {
-                return $this->buildErrorResponse("Payment processing failed please try again", null, 400);
+                $payment->update([
+                    'status' => 'Failed',
+                    'message' => $response->data()['error']
+                ]);
+                return $this->buildErrorResponse("Payment processing failed with reason " . $response->data()['error'], null, 400);
             }
         } catch (ConnectionException|HashMismatchException|InvalidIntegrationException|NotImplementedException $e) {
             Log::info("error from paynow ", [$e->getMessage()]);
@@ -78,12 +81,6 @@ class PaymentsController extends BaseController
 
     public function show(Payments $payments): JsonResponse
     {
-        return $this->buildSuccessResponse($payments,"Payment record retrieved successfully");
-    }
-
-
-    public function pollTransaction()
-    {
-        $this->pollPayNowResponse();
+        return $this->buildSuccessResponse($payments, "Payment record retrieved successfully");
     }
 }

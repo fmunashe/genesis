@@ -10,10 +10,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Infolists;
-use Filament\Infolists\Infolist;
 
 class PaymentsResource extends Resource
 {
@@ -45,6 +41,8 @@ class PaymentsResource extends Resource
                     ->numeric(),
                 Forms\Components\TextInput::make('status')
                     ->maxLength(255),
+                Forms\Components\TextInput::make('message')
+                    ->maxLength(255),
             ]);
     }
 
@@ -61,11 +59,14 @@ class PaymentsResource extends Resource
                 Tables\Columns\TextColumn::make('paymentMode')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('pollUrl')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('totalBill')
                     ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('message')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -84,7 +85,7 @@ class PaymentsResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->recordUrl(function ($record) {
@@ -107,6 +108,7 @@ class PaymentsResource extends Resource
             'edit' => Pages\EditPayments::route('/{record}/edit'),
         ];
     }
+
     public static function canCreate(): bool
     {
         return false;
