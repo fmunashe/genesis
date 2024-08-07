@@ -18,7 +18,11 @@ class SyncPaynowPaymentStatus extends Command
     {
         try {
             $this->info('======= Initiate Payment Synchronization =======');
-            $payments = Payments::query()->whereNull(['status'])->orWhere('status', '=', '')->get();
+            $payments = Payments::query()
+                ->whereNull(['status'])
+                ->orWhere('status', '=', '')
+                ->orWhere('status','=','Sent')
+                ->get();
             foreach ($payments as $payment) {
                 $this->pollPayNowResponse($payment->pollUrl, $payment);
             }

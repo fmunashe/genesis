@@ -47,7 +47,6 @@ trait PayNowTrait
 
         $status = $paynow->pollTransaction($pollUrl);
 
-        Log::info("====== Status is ======", [$status]);
         Log::info("====== Status Data is ======", [$status->data()]);
 
         if ($status->paid()) {
