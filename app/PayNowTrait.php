@@ -5,6 +5,7 @@ namespace App;
 use App\Models\Order;
 use App\Models\Payments;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\Log;
 use Paynow\Core\InitResponse;
 use Paynow\Http\ConnectionException;
 use Paynow\Payments\HashMismatchException;
@@ -45,6 +46,9 @@ trait PayNowTrait
         $paynow = new Paynow(config('app.PAYNOW_INTEGRATION_ID'), config('app.PAYNOW_INTEGRATION_KEY'), config('app.PAYNOW_RETURN_URL'), config('app.PAYNOW_RESULT_URL'));
 
         $status = $paynow->pollTransaction($pollUrl);
+
+        Log::info("====== Status is ======",[$status]);
+        Log::info("====== Status Data is ======",[$status->data()]);
 
         if ($status->paid()) {
             $payment->update([
