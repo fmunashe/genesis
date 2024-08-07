@@ -13,6 +13,7 @@ Route::get('/user', function (Request $request) {
 
 Route::apiResource('tickets', TicketController::class)->except(['create', 'edit']);
 Route::apiResource('ticketTypes', TicketTypeController::class)->except(['create', 'edit']);
+Route::post('paynowCallBack', [PaymentsController::class, 'payNowCallBack']);
 Route::apiResource('payments', PaymentsController::class)->only(['index', 'store']);
-Route::post('/codes/verify/{code}', [QRcodeController::class,'verify'])->name("verifyCode");
+Route::post('/codes/verify/{code}', [QRcodeController::class, 'verify'])->name("verifyCode");
 //Route::apiResource('codes', QRcodeController::class)->only(['index', 'store','show']);

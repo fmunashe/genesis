@@ -9,6 +9,7 @@ use App\Models\Payments;
 use App\Models\Ticket;
 use App\PayNowTrait;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Paynow\Http\ConnectionException;
 use Paynow\Payments\HashMismatchException;
@@ -82,5 +83,10 @@ class PaymentsController extends BaseController
     public function show(Payments $payments): JsonResponse
     {
         return $this->buildSuccessResponse($payments, "Payment record retrieved successfully");
+    }
+
+    public function payNowCallBack(Request $request)
+    {
+        Log::info("update from paynow is ",[$request->all()]);
     }
 }
