@@ -85,7 +85,7 @@ class PaymentsController extends BaseController
         return $this->buildSuccessResponse($payments, "Payment record retrieved successfully");
     }
 
-    public function payNowCallBack(Request $request)
+    public function payNowCallBack(Request $request): void
     {
         Log::info("update from paynow is ",[$request->all()]);
     }
