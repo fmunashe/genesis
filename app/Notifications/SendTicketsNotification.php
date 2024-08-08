@@ -2,7 +2,9 @@
 
 namespace App\Notifications;
 
+use App\Models\Payments;
 use App\Models\QRcode;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -15,9 +17,13 @@ class SendTicketsNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public int $totalCodes;
+    public Payments $payment;
+
+    public function __construct($codes, $payment)
     {
-        //
+        $this->totalCodes = $codes;
+        $this->payment = $payment;
     }
 
     /**
@@ -36,23 +42,25 @@ class SendTicketsNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         try {
-            $code = random_int(10000000000, 999999999999);
-            $qrCode = \SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')->size(200)->encoding('UTF-8')->generate($code);
-            $qrCodeBase64 = base64_encode($qrCode);
-            QRcode::query()->create([
-                'code' => $code
-            ]);
+            $codesArray = [];
+            for ($i = 0; $i < $this->totalCodes; $i++) {
+                $code = random_int(10000000000, 999999999999);
+                QRcode::query()->create([
+                    'code' => $code
+                ]);
+                $codesArray[] = $this->generateQrCode($code);
+            }
+            $pdf = $this->generatePdfWithQrCode($codesArray, $this->payment);
 
-            \SimpleSoftwareIO\QrCode\Facades\QrCode::email('farai@gmail.com','Testing',$qrCode);
             return (new MailMessage)
                 ->subject('Event Admission Ticket')
                 ->greeting('Greetings Music Lover!!')
-                ->line('Thank you for purchasing a ticket to our event!')
-                ->line('Below is your code that you must bring on the day of the event')
-                ->line($code)
-//                ->line('<img src="data:image/png;base64,' . $qrCodeBase64 . '">')
-//                <img src="{!!$message->embedData(QrCode::format('png')->size(200)->encoding('UTF-8')->generate($data['qr']), 'QrCode.png', 'image/png')!!}">
+                ->line('Thank you for purchasing tickets to our event!')
+                ->line('Check the attached document with QR codes containing details of your purchase')
                 ->line("Note that without this you will not be admitted at the gate")
+                ->attachData($pdf, 'ticketInformation.pdf', [
+                    'mime' => 'application/pdf',
+                ])
                 ->line('Thank you for supporting us!');
 
         } catch (RandomException $e) {
@@ -70,5 +78,19 @@ class SendTicketsNotification extends Notification
         return [
             //
         ];
+    }
+
+    protected function generatePdfWithQrCode($codes, $payment): string
+    {
+        $orderItem = $payment->order->items->first();
+        $ticket = $orderItem->ticket;
+        $pdf = Pdf::loadView('notification', ['codes' => $codes, 'ticket' => $ticket]);
+
+        return $pdf->output();
+    }
+
+    protected function generateQrCode($code): string
+    {
+        return base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')->size(100)->generate($code));
     }
 }

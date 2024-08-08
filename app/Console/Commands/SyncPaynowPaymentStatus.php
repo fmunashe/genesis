@@ -31,9 +31,8 @@ class SyncPaynowPaymentStatus extends Command
                 $status = $this->pollPayNowResponse($payment->pollUrl, $payment);
                 if ($status) {
                     $codesToGenerate = $payment->order->items->sum('quantity');
-                    Log::info("code to generate are ", [$codesToGenerate]);
                     $tempUser = new TempUser($payment->payerEmail);
-                    Notification::send($tempUser, new SendTicketsNotification());
+                    Notification::send($tempUser, new SendTicketsNotification($codesToGenerate,$payment));
                 }
             }
             $this->info('======= Payment Synchronization Completed =======');
