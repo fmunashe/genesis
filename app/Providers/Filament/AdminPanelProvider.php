@@ -25,8 +25,8 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id('genesis')
-            ->path('genesis')
+            ->id('backend')
+            ->path('backend')
             ->login()
 //            ->registration()
 //            ->passwordReset()
