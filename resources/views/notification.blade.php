@@ -27,6 +27,7 @@
 </head>
 
 <body>
+<img alt="logo" src="{{ public_path('images/nachologo.png') }}" style="margin-left: 15px" width="200" height="200"/>
 <h2>Event Ticket Data</h2>
 @for($i=0;$i<sizeof($codes['codes']); $i++)
     <div class="grid-container">

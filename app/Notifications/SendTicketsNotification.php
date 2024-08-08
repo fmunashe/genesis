@@ -8,7 +8,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Log;
 use Random\RandomException;
 
 class SendTicketsNotification extends Notification
@@ -45,12 +44,14 @@ class SendTicketsNotification extends Notification
         try {
             $codesArray = [];
             foreach ($this->payment->order->items as $item) {
-                $code = random_int(10000000000, 999999999999);
-                QRcode::query()->create([
-                    'code' => $code
-                ]);
-                $codesArray['codes'][] = $this->generateQrCode($code);
-                $codesArray['tickets'][] = $item->ticket;
+                for ($i = 0; $i < $item->quantity; $i++) {
+                    $code = random_int(10000000000, 999999999999);
+                    QRcode::query()->create([
+                        'code' => $code
+                    ]);
+                    $codesArray['codes'][] = $this->generateQrCode($code);
+                    $codesArray['tickets'][] = $item->ticket;
+                }
             }
             $pdf = $this->generatePdfWithQrCode($codesArray, $this->payment);
 
