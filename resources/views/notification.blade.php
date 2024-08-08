@@ -28,20 +28,20 @@
 
 <body>
 <h2>Event Ticket Data</h2>
-@foreach($codes as $code)
+@for($i=0;$i<sizeof($codes['codes']); $i++)
     <div class="grid-container">
         <div class="grid-item">
-            <img src="data:image/png;base64,{{ $code }}" alt="QR Code">
+            <img src="data:image/png;base64,{{ $codes['codes'][$i] }}" alt="QR Code">
         </div>
         <div class="grid-item">
-            <p>Event Name: {{$ticket->eventName}}</p>
-            <p>Event Venue:{{$ticket->eventVenue}}</p>
-            <p>Event Date: {{$ticket->eventDate}}</p>
-            <p>Event Start Time:{{\Carbon\Carbon::parse($ticket->startTime)->format('H:s a')}}</p>
-            <p>Event End Time:{{\Carbon\Carbon::parse($ticket->endTime)->format('H:s a')}}</p>
+            <p>Event Name: {{$codes['tickets'][$i]->eventName}}</p>
+            <p>Event Venue:{{$codes['tickets'][$i]->eventVenue}}</p>
+            <p>Event Date: {{$codes['tickets'][$i]->eventDate}}</p>
+            <p>Event Start Time:{{\Carbon\Carbon::parse($codes['tickets'][$i]->startTime)->format('H:s a')}}</p>
+            <p>Event End Time:{{\Carbon\Carbon::parse($codes['tickets'][$i]->endTime)->format('H:s a')}}</p>
         </div>
     </div>
     <hr class="dotted"/>
-@endforeach
+@endfor
 </body>
 </html>
