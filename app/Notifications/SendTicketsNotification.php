@@ -49,21 +49,23 @@ class SendTicketsNotification extends Notification
                     QRcode::query()->create([
                         'code' => $code
                     ]);
-                    $codesArray['codes'][] = $this->generateQrCode($code);
-                    $codesArray['tickets'][] = $item->ticket;
+                    $codesArray[] = $code;
+//                    $codesArray['codes'][] = $this->generateQrCode($code);
+//                    $codesArray['tickets'][] = $item->ticket;
                 }
             }
-            $pdf = $this->generatePdfWithQrCode($codesArray, $this->payment);
+//            $pdf = $this->generatePdfWithQrCode($codesArray, $this->payment);
 
             return (new MailMessage)
                 ->subject('Event Admission Ticket')
                 ->greeting('Greetings Music Lover!!')
                 ->line('Thank you for purchasing tickets to our event!')
-                ->line('Check the attached document with QR codes containing details of your purchase')
-                ->line("Note that without this you will not be admitted at the gate")
-                ->attachData($pdf, 'ticketInformation.pdf', [
-                    'mime' => 'application/pdf',
-                ])
+                ->line('Check the codes containing details of your purchase in the email')
+                ->line("Note that without these you will not be admitted at the gate")
+                ->lines($codesArray)
+//                ->attachData($pdf, 'ticketInformation.pdf', [
+//                    'mime' => 'application/pdf',
+//                ])
                 ->line('Thank you for supporting us!');
 
         } catch (RandomException $e) {
