@@ -10,7 +10,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Random\RandomException;
 
-class SendTicketsNotification extends Notification
+class  SendTicketsNotification extends Notification
 {
     use Queueable;
 
@@ -63,6 +63,7 @@ class SendTicketsNotification extends Notification
                 ->line('Check the codes containing details of your purchase in the email')
                 ->line("Note that without these you will not be admitted at the gate")
                 ->lines($codesArray)
+                ->attach(public_path('images/updatedtickert.jpeg'))
 //                ->attachData($pdf, 'ticketInformation.pdf', [
 //                    'mime' => 'application/pdf',
 //                ])
